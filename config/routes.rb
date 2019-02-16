@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  get 'users/show'
-
-  get 'users/index'
-
   root 'mains#top'
   get 'mains/top'
 
@@ -12,6 +8,7 @@ Rails.application.routes.draw do
     registrations: 'users/registrations',
     sessions: 'users/sessions'
   }
+  resources :users, :only => [:show, :index]
 
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 end
