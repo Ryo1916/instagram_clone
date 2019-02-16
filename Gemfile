@@ -7,9 +7,9 @@ end
 
 
 # base
-gem 'jbuilder',   '2.7.0'
-gem 'puma',       '3.9.1'
 gem 'rails',      '5.1.6'
+gem 'puma',       '3.9.1'
+gem 'jbuilder',   '2.7.0'
 gem 'turbolinks', '5.0.1'
 gem 'uglifier',   '3.2.0'
 gem 'mini_racer', '0.2.4'
@@ -59,11 +59,9 @@ group :development do
   gem 'better_errors',         '2.5.0'
   gem 'binding_of_caller',     '0.8.0'
   gem 'listen',                '3.1.5'
-  gem 'overcommit',            '0.46.0'
   gem 'pry-byebug',            '3.6.0'
   gem 'pry-doc',               '1.0.0'
   gem 'pry-rails',             '0.3.9'
-  gem 'rubocop-airbnb',        '2.0.0'
   gem 'spring',                '2.0.2'
   gem 'spring-watcher-listen', '2.0.1'
   gem 'web-console',           '3.5.1'
