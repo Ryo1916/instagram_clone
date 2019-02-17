@@ -29,5 +29,8 @@ module InstagramClone
       g.stylesheets false
       g.javascripts false
     end
+
+    # Use secrets.yml for credentials
+    config.read_encrypted_secrets = true
   end
 end
