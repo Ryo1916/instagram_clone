@@ -6,7 +6,7 @@
 #  name                   :string           default(""), not null
 #  username               :string           default(""), not null
 #  website                :string           default("")
-#  introduction           :text             default("")
+#  bio                    :text             default("")
 #  email                  :string           default(""), not null
 #  phone                  :string           default("")
 #  gender                 :string           default("")

@@ -6,7 +6,7 @@
 #  name                   :string           default(""), not null
 #  username               :string           default(""), not null
 #  website                :string           default("")
-#  introduction           :text             default("")
+#  bio                    :text             default("")
 #  email                  :string           default(""), not null
 #  phone                  :string           default("")
 #  gender                 :string           default("")
@@ -35,13 +35,23 @@ class User < ApplicationRecord
 
   # Validations
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  VALID_USERNAME_REGEX = /\A[a-zA-Z0-9_\.]*\Z/
+  VALID_DOMAIN_REGEX = /\A[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}\Z/
   validates :name, presence: true, case_sensitive: false
-  validates :username, presence: true, uniqueness: { case_sensitive: false }
-  validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, multiline: true
+  validates :username, presence: true,
+                       uniqueness: { case_sensitive: false },
+                       format: { with: VALID_USERNAME_REGEX }
   validate :validate_username
   validates :email, presence: true,
                     uniqueness: true,
                     format: { with: VALID_EMAIL_REGEX }
+  validates :website, allow_blank: true,
+                      format: { with: VALID_DOMAIN_REGEX }
+  validates :bio, allow_blank: true,
+                  length: { maximum: 500 }
+  validates :phone, allow_blank: true,
+                    numericality: { only_integer: true }
+  # TODO: validates :gender -> enum型でやってみる
 
   def validate_username
     errors.add(:username, :invalid) if User.where(email: username).exists?
