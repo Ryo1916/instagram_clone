@@ -19,10 +19,6 @@
 #  last_sign_in_at        :datetime
 #  current_sign_in_ip     :inet
 #  last_sign_in_ip        :inet
-#  confirmation_token     :string
-#  confirmed_at           :datetime
-#  confirmation_sent_at   :datetime
-#  unconfirmed_email      :string
 #  failed_attempts        :integer          default(0), not null
 #  unlock_token           :string
 #  locked_at              :datetime
@@ -33,13 +29,19 @@
 class User < ApplicationRecord
   attr_writer :login
 
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable,
-         :validatable, :confirmable, :lockable, :timeoutable,
+  devise :database_authenticatable, :registerable, :recoverable,
+         :rememberable, :validatable, :lockable, :timeoutable,
          :omniauthable
 
+  # Validations
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  validates :name, presence: true, case_sensitive: false
   validates :username, presence: true, uniqueness: { case_sensitive: false }
   validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, multiline: true
   validate :validate_username
+  validates :email, presence: true,
+                    uniqueness: true,
+                    format: { with: VALID_EMAIL_REGEX }
 
   def validate_username
     errors.add(:username, :invalid) if User.where(email: username).exists?
