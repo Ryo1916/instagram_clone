@@ -9,7 +9,6 @@
 #  bio                    :text             default("")
 #  email                  :string           default(""), not null
 #  phone                  :string           default("")
-#  gender                 :string           default("")
 #  encrypted_password     :string           default(""), not null
 #  reset_password_token   :string
 #  reset_password_sent_at :datetime
@@ -24,6 +23,9 @@
 #  locked_at              :datetime
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  gender                 :integer          default("not_specified")
+#  provider               :string
+#  uid                    :string
 #
 
 FactoryBot.define do
