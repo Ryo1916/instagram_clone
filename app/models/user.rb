@@ -33,6 +33,8 @@ class User < ApplicationRecord
          :rememberable, :validatable, :lockable, :timeoutable,
          :omniauthable
 
+  enum gender: { not_specified: 0, female: 1, male: 2 }
+
   # Validations
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   VALID_USERNAME_REGEX = /\A[a-zA-Z0-9_\.]*\Z/
@@ -51,7 +53,8 @@ class User < ApplicationRecord
                   length: { maximum: 500 }
   validates :phone, allow_blank: true,
                     numericality: { only_integer: true }
-  # TODO: validates :gender -> enum型でやってみる
+  validates :gender, presence: true,
+                     inclusion: { in: User.genders.keys }
 
   def validate_username
     errors.add(:username, :invalid) if User.where(email: username).exists?

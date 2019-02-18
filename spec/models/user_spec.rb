@@ -52,6 +52,8 @@ RSpec.describe User, type: :model do
       it { should validate_presence_of(:username) }
       it { should validate_presence_of(:email) }
       it { should validate_presence_of(:password) }
+      it { should validate_presence_of(:gender) }
+      it { should define_enum_for(:gender) }
 
       it "is invalid username format" do
         invalid_usernames = %w[John\ Lennon, Aaron@Sumner]
@@ -83,7 +85,7 @@ RSpec.describe User, type: :model do
       end
 
       it "is invalid bio that is too long" do
-        @user.bio = "UkdONzL4dIysuv7kWxy4FeSUr34LLvjBdXT17NJkM0IT5heYaRYG5b13SQHRAQ1CT0RSM0d0Ps9mJ4BmgcpEra4JusyvJISyoF4YIX1AK1uXR4lGNbEBJnyNlhAMvFePA56zsSPYLBjESde1oOvOm2Nm94fFexjeyL4mFk5DVmdIkqYESj6O2Q4NKyHsZLbK9QZFzx3SEtHYJIQ4kgWqYZRkeJkWewFamt1XyqUkAU9oVGhIfOirmIINq78q2tSuKIxwf5fzNTp72EULYRTEGNls8Lim5sr5Qo0EE3aazo0inx6dKR89Fg3diS3rJJIPghhJSl0QYuckcrFFOQnUNT4hqtLtXpA3vqvaGcQdOZ5IzhHCFXzB88JPSMQzZxhlCUPZkl9I6mNlzoBlXC2ZoHPeNvEbwyxwIHtBpbr8tJkGiyxOk5opvadEBbQoz1fPkmfDyyEsVCgHX2SdLHQwHZh7APXpgr3fIXPHEX1vqK1718dvljZr!"
+        @user.bio = "a" * 501
         @user.valid?
         expect(@user.errors[:bio]).to include("is too long (maximum is 500 characters)")
       end
