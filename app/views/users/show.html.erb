@@ -1,3 +1,7 @@
 <h1> <%= @user.username %> </h1>
+<p> <%= image_tag @user.avatar,
+                  class: 'rounded-circle',
+                  style: 'width: 100px;',
+                  alt: 'users avatar' %> </p>
 <%= link_to "logout", destroy_user_session_path, method: :delete %>
 <%= link_to "Edit profile", edit_user_registration_path %>

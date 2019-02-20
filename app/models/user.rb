@@ -38,6 +38,8 @@ class User < ApplicationRecord
 
   enum gender: { not_specified: 0, female: 1, male: 2 }
 
+  mount_uploader :avatar, AvatarUploader
+
   # Validations
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   VALID_USERNAME_REGEX = /\A[a-zA-Z0-9_\.]*\Z/
@@ -46,7 +48,6 @@ class User < ApplicationRecord
   validates :username, presence: true,
                        uniqueness: { case_sensitive: false },
                        format: { with: VALID_USERNAME_REGEX }
-  validate :validate_username
   validates :email, presence: true,
                     uniqueness: true,
                     format: { with: VALID_EMAIL_REGEX }
@@ -58,10 +59,8 @@ class User < ApplicationRecord
                     numericality: { only_integer: true }
   validates :gender, presence: true,
                      inclusion: { in: User.genders.keys }
-
-  def validate_username
-    errors.add(:username, :invalid) if User.where(email: username).exists?
-  end
+  validate :validate_username
+  validate :avatar_size
 
   def login
     @login || self.username || self.email
@@ -85,7 +84,7 @@ class User < ApplicationRecord
       user.username = auth.info.username
       user.website = auth.info.link
       user.password = Devise.friendly_token[0, 20]
-      # user.image = auth.info.image # assuming the user model has an image
+      user.remote_avatar_url = auth.info.image
     end
   end
 
@@ -99,7 +98,20 @@ class User < ApplicationRecord
         user.password = Devise.friendly_token[0, 20]
         user.provider = data["provider"] if user.provider.blank?
         user.uid = data["uid"] if user.uid.blank?
+        user.remote_avatar_url = data["info"]["image"] if user.avatar.blank?
       end
     end
   end
+
+  private
+
+    def validate_username
+      errors.add(:username, :invalid) if User.where(email: username).exists?
+    end
+
+    def avatar_size
+      if avatar.size > 5.megabytes
+        errors.add(:avatar, "should be less than 5MB")
+      end
+    end
 end

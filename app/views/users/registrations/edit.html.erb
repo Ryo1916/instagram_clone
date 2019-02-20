@@ -38,6 +38,14 @@
     <%= f.text_field :gender, placeholder: "Gender" %>
   </div>
 
+  <div class="upload">
+    <%= f.label :avatar %><br />
+    <label for="user_avatar">
+      <div class="btn btn-success">Change your avatar</div>
+    </label>
+    <%= f.file_field :avatar, id: :user_avatar, class: "image-upload" %>
+  </div>
+
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>

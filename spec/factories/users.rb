@@ -31,6 +31,10 @@
 
 FactoryBot.define do
   factory :user do
-    
+    name "Donald Fagen"
+    username "donald"
+    email "donald-fagen@gmail.com"
+    password "Thenightfly"
+    avatar { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/sample.jpg'), 'image/jpg') }
   end
 end

@@ -32,6 +32,8 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  include CarrierWave::Test::Matchers
+
   describe "validations test" do
     before do
       @saved_user = User.create(name: "Aaron Sumner",
@@ -47,6 +49,15 @@ RSpec.describe User, type: :model do
     context "valid information" do
       it "is valid with a full name, username, email, and password" do
         expect(@user).to be_valid
+      end
+
+      it "is valid avatar format with jpg, jpeg, png" do
+        formats = %w[jpeg jpg png]
+        formats.each do |format|
+          image_path = File.join(Rails.root, "spec/fixtures/sample.#{format}")
+          user = FactoryBot.build(:user, avatar: File.open(image_path))
+          expect(user).to be_valid
+        end
       end
     end
 
@@ -111,6 +122,19 @@ RSpec.describe User, type: :model do
           @user.valid?
           expect(@user.errors[:phone]).to include("is not a number")
         end
+      end
+
+      it "is invalid avatar format" do
+        image_path = File.join(Rails.root, "spec/fixtures/sample.gif")
+        user = FactoryBot.build(:user, avatar: File.open(image_path))
+        expect(user).not_to be_valid
+      end
+
+      xit "is invalid avatar size" do
+        image_path = File.join(Rails.root, "spec/fixtures/sample.jpg")
+        user = FactoryBot.create(:user, avatar: File.open(image_path))
+        user.valid?
+        expect(user.errors[:avatar]).to include("should be less than 5MB")
       end
 
       it "is invalid password that is too short" do
