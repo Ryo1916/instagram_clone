@@ -26,6 +26,7 @@
 #  gender                 :integer          default("not_specified")
 #  provider               :string
 #  uid                    :string
+#  avatar                 :string
 #
 
 require 'rails_helper'
