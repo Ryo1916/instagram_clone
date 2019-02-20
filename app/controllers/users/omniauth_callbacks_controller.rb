@@ -4,27 +4,20 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   before_action :user_signed_in?
 
   def facebook
-    # You need to implement the method below in your model (e.g. app/models/user.rb)
     @user = User.from_omniauth(request.env["omniauth.auth"])
 
-    if @user.persisted?
-      sign_in_and_redirect @user, event: :authentication #this will throw if @user is not activated
-      set_flash_message(:notice, :success, kind: "Facebook") if is_navigational_format?
-    else
+    if @user.nil?
       session["devise.facebook_data"] = request.env["omniauth.auth"]
       redirect_to new_user_registration_url
+    else
+      sign_in_and_redirect @user, event: :authentication
+      set_flash_message(:notice, :success, kind: "Facebook") if is_navigational_format?
     end
   end
 
   # GET|POST /users/auth/providers/callback
   def failure
-    redirect_to root_path
+    flash[:alert] = "Something went wrong!"
+    redirect_to new_user_registration_path
   end
-
-  # protected
-
-  # The path used when OmniAuth fails
-  # def after_omniauth_failure_path_for(scope)
-  #   super(scope)
-  # end
 end
