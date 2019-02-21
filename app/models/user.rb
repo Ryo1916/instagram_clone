@@ -40,7 +40,6 @@ class User < ApplicationRecord
 
   mount_uploader :avatar, AvatarUploader
 
-  # Validations
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   VALID_USERNAME_REGEX = /\A[a-zA-Z0-9_\.]*\Z/
   VALID_DOMAIN_REGEX = /\A[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}\Z/

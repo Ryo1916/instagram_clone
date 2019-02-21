@@ -40,10 +40,7 @@ RSpec.describe User, type: :model do
                                 username: "Aaron",
                                 email: "aaron@test.abc",
                                 password: "password")
-      @user = User.new(name: "Ringo Starr",
-                       username: "Ringo",
-                       email: "Starr@beatles.com",
-                       password: "i'vegotblistersonmyfinger")
+      @user = FactoryBot.build_stubbed(:user)
     end
 
     context "valid information" do
@@ -55,8 +52,8 @@ RSpec.describe User, type: :model do
         formats = %w[jpeg jpg png]
         formats.each do |format|
           image_path = File.join(Rails.root, "spec/fixtures/sample.#{format}")
-          user = FactoryBot.build(:user, avatar: File.open(image_path))
-          expect(user).to be_valid
+          @user.avatar = File.open(image_path)
+          expect(@user).to be_valid
         end
       end
     end
@@ -79,14 +76,9 @@ RSpec.describe User, type: :model do
       end
 
       it "is invalid with a duplicate username" do
-        user = User.new(
-          name: "Paul Mccartney",
-          username: "Aaron",
-          email: "paul@beatles.com",
-          password: "oops,sorry",
-        )
-        user.valid?
-        expect(user.errors[:username]).to include("has already been taken")
+        @user.username = "Aaron"
+        @user.valid?
+        expect(@user.errors[:username]).to include("has already been taken")
       end
 
       it "is invalid website format" do
@@ -105,14 +97,9 @@ RSpec.describe User, type: :model do
       end
 
       it "is invalid with a duplicate email" do
-        user = User.new(
-          name: "Jane Samner",
-          username: "Jane",
-          email: "aaron@test.abc",
-          password: "foobar"
-        )
-        user.valid?
-        expect(user.errors[:email]).to include("has already been taken")
+        @user.email = "aaron@test.abc"
+        @user.valid?
+        expect(@user.errors[:email]).to include("has already been taken")
       end
 
       it "is invalid phone format" do
@@ -126,21 +113,20 @@ RSpec.describe User, type: :model do
 
       it "is invalid avatar format" do
         image_path = File.join(Rails.root, "spec/fixtures/sample.gif")
-        user = FactoryBot.build(:user, avatar: File.open(image_path))
-        expect(user).not_to be_valid
+        @user.avatar = File.open(image_path)
+        expect(@user).not_to be_valid
       end
 
-      xit "is invalid avatar size" do
+      it "is invalid avatar size" do
         image_path = File.join(Rails.root, "spec/fixtures/sample.jpg")
-        user = FactoryBot.create(:user, avatar: File.open(image_path))
-        user.valid?
-        expect(user.errors[:avatar]).to include("should be less than 5MB")
+        @user.avatar = File.open(image_path)
+        expect(@user).not_to be_valid
       end
 
       it "is invalid password that is too short" do
-        user = User.new(password: "pass")
-        user.valid?
-        expect(user.errors[:password]).to include("is too short (minimum is 6 characters)")
+        @user.password = "pass"
+        @user.valid?
+        expect(@user.errors[:password]).to include("is too short (minimum is 6 characters)")
       end
     end
 
