@@ -257,9 +257,16 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
+  if Rails.env.production?
+    callback_url = "https://instagram-clone-ryo.herokuapp.com/users/auth/facebook/callback"
+  else
+    callback_url = "https://localhost:5000/users/auth/facebook/callback"
+  end
+
   config.omniauth :facebook,
     Rails.application.secrets.facebook_api_key,
     Rails.application.secrets.facebook_api_secret,
+    callback_url: callback_url,
     secure_image_url: true,
     image_size: :large
 
