@@ -35,6 +35,7 @@
 #               GET    /:id/attachments/:file(.:format) letter_opener_web/letters#attachment
 
 Rails.application.routes.draw do
+  resources :posts
   root 'mains#top'
   get 'mains/top'
 
