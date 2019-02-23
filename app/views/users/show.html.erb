@@ -1,7 +1,9 @@
 <h1> <%= @user.username %> </h1>
-<p> <%= image_tag @user.avatar,
+<p> <%= image_tag @user.avatar.thumb,
                   class: 'rounded-circle',
-                  style: 'width: 100px;',
                   alt: 'users avatar' %> </p>
+<p> <%= @user.posts.count %> posts </p>
+<%= render @user.posts %>
+
 <%= link_to "logout", destroy_user_session_path, method: :delete %>
 <%= link_to "Edit profile", edit_user_registration_path %>

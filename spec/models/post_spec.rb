@@ -24,12 +24,13 @@ RSpec.describe Post, type: :model do
         password: "dottle-nouveau-pavilion-tights-furze",
       )
 
-      image_path = File.join(Rails.root, "spec/fixtures/sample.jpeg")
-      @new_post = @user.posts.build(
-        image: File.open(image_path),
-        content: "lorem ipsum",
-        user_id: @user.id
-      )
+      @new_post = FactoryBot.build_stubbed(:post)
+      # image_path = File.join(Rails.root, "spec/fixtures/sample.jpeg")
+      # @new_post = @user.posts.build(
+      #   image: File.open(image_path),
+      #   content: "lorem ipsum",
+      #   user_id: @user.id
+      # )
     end
 
     it { should validate_presence_of(:image) }
@@ -44,6 +45,19 @@ RSpec.describe Post, type: :model do
     context "invalid information" do
       it "is invalid without image" do
         @new_post.image = nil
+        expect(@new_post).not_to be_valid
+      end
+
+      it "is invalid image format" do
+        image_path = File.join(Rails.root, "spec/fixtures/sample.gif")
+        @new_post.image = File.open(image_path)
+        expect(@new_post).not_to be_valid
+      end
+
+      it "is invalid image size" do
+        skip('remove resize_to_fit or change filisize condtion then it will pass')
+        image_path = File.join(Rails.root, "spec/fixtures/sample.jpg")
+        @new_post.image = File.open(image_path)
         expect(@new_post).not_to be_valid
       end
 

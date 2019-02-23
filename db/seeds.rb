@@ -1,7 +1,49 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+require "open-uri"
+require 'openssl'
+
+# https://github.com/stympy/faker/issues/763
+OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
+
+puts 'Start inserting seed users...'
+
+User.create!(name:  "Example User",
+             username: "exampleuser",
+             email: "example@railstutorial.org",
+             website: "https://railstutorial.jp",
+             bio: Faker::Lorem.sentence(6),
+             phone: 9910375368,
+             gender: 1,
+             avatar: open(Faker::Avatar.image(slug = nil, size = '300x300', format = 'jpg')),
+             password:              "password",
+             password_confirmation: "password")
+
+99.times do |n|
+ user = User.create!({
+    name: Faker::Name.name,
+    username: Faker::Internet.unique.user_name,
+    email: Faker::Internet.unique.email,
+    website: Faker::Internet.url,
+    bio: Faker::Lorem.sentence(6),
+    phone: Faker::PhoneNumber.cell_phone.to_i,
+    gender: 0,
+    avatar: open(Faker::Avatar.image(slug = nil, size = '300x300', format = 'png')),
+    password:              "password",
+    password_confirmation: "password"
+  })
+
+  puts "#{user.username} created!"
+end
+
+puts "Start inserting seed posts..."
+
+users = User.order(:created_at).take(6)
+50.times do
+  users.each do |user|
+    post = user.posts.create!({
+      image: open(Faker::Avatar.image(slug = nil, size = '300x300', format = 'jpg')),
+      content: Faker::Lorem.sentence(5)
+    })
+
+    puts "#{post.user.username}'s post created!"
+  end
+end

@@ -21,13 +21,11 @@ class Post < ApplicationRecord
   validates :content, allow_blank: true,
                       length: { maximum: 255 }
   validates :user_id, presence: true
+  validate :image_size
 
-  # rspecを実行するとなぜかundefined method 'size'になってしまうので一旦コメントアウト
-  # validate :image_size
-  #
-  # private
-  #
-  #   def image_size
-  #     errors.add(:image, "should be less than 1GB") if image.size > 1.gigabytes
-  #   end
+  private
+
+    def image_size
+      errors.add(:image, "should be less than 5MB") if image.size > 5.megabytes
+    end
 end
