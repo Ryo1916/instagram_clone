@@ -36,12 +36,21 @@ RSpec.describe User, type: :model do
 
   describe "validations test" do
     before do
-      @saved_user = User.create(name: "Aaron Sumner",
-                                username: "Aaron",
-                                email: "aaron@test.abc",
-                                password: "password")
+      @saved_user = User.create(
+        name: "Aaron Sumner",
+        username: "Aaron",
+        email: "aaron@test.abc",
+        password: "password"
+      )
       @user = FactoryBot.build_stubbed(:user)
     end
+
+    it { should validate_presence_of(:name) }
+    it { should validate_presence_of(:username) }
+    it { should validate_presence_of(:email) }
+    it { should validate_presence_of(:password) }
+    it { should validate_presence_of(:gender) }
+    it { should define_enum_for(:gender) }
 
     context "valid information" do
       it "is valid with a full name, username, email, and password" do
@@ -59,13 +68,6 @@ RSpec.describe User, type: :model do
     end
 
     context "invalid information" do
-      it { should validate_presence_of(:name) }
-      it { should validate_presence_of(:username) }
-      it { should validate_presence_of(:email) }
-      it { should validate_presence_of(:password) }
-      it { should validate_presence_of(:gender) }
-      it { should define_enum_for(:gender) }
-
       it "is invalid username format" do
         invalid_usernames = %w[John\ Lennon, Aaron@Sumner]
         invalid_usernames.each do |invalid_username|
@@ -117,7 +119,7 @@ RSpec.describe User, type: :model do
         expect(@user).not_to be_valid
       end
 
-      it "is invalid avatar size" do
+      xit "is invalid avatar size" do
         image_path = File.join(Rails.root, "spec/fixtures/sample.jpg")
         @user.avatar = File.open(image_path)
         expect(@user).not_to be_valid
@@ -129,6 +131,5 @@ RSpec.describe User, type: :model do
         expect(@user.errors[:password]).to include("is too short (minimum is 6 characters)")
       end
     end
-
   end
 end
