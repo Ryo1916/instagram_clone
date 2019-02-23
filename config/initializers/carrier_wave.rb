@@ -7,5 +7,6 @@ if Rails.env.production?
       :aws_secret_access_key => Rails.application.secrets.secret_access_key
     }
     config.fog_directory     =  Rails.application.secrets.bucket
+    config.asset_host        =  "https://s3-#{Rails.application.secrets.region}.amazonaws.com/#{Rails.application.secrets.bucket}"
   end
 end

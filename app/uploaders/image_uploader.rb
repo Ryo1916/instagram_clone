@@ -9,7 +9,6 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   process resize_to_fit: [500, 500]
-  process convert: 'jpg'
 
   version :thumb do
     process resize_to_fit: [300, 300]
@@ -24,6 +23,13 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   def filename
-    "post_#{Time.zone.now.strftime('%Y%m%d%H%M%S')}.jpg" if original_filename
+    "#{secure_token}.#{file.extension}" if original_filename.present?
   end
+
+  protected
+
+    def secure_token
+      var = :"@#{mounted_as}_secure_token"
+      model.instance_variable_get(var) or model.instance_variable_set(var, SecureRandom.uuid)
+    end
 end
