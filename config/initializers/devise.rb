@@ -260,7 +260,7 @@ Devise.setup do |config|
   if Rails.env.production?
     callback_url = "https://instagram-clone-ryo.herokuapp.com/users/auth/facebook/callback"
   else
-    callback_url = "https://localhost:5000/users/auth/facebook/callback"
+    callback_url = "http://localhost:5000/users/auth/facebook/callback"
   end
 
   config.omniauth :facebook,
