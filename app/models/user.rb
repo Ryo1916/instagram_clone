@@ -40,9 +40,11 @@ class User < ApplicationRecord
 
   mount_uploader :avatar, AvatarUploader
 
+  has_many :posts, dependent: :destroy
+
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   VALID_USERNAME_REGEX = /\A[a-zA-Z0-9_\.]*\Z/
-  VALID_DOMAIN_REGEX = /\A[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}\Z/
+  # VALID_URL_REGEX = /\A(http|https):\/\/[a-zA-Z0-9]*\.[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}\/[a-zA-Z0-9]*\Z/
   validates :name, presence: true, case_sensitive: false
   validates :username, presence: true,
                        uniqueness: { case_sensitive: false },
@@ -50,12 +52,14 @@ class User < ApplicationRecord
   validates :email, presence: true,
                     uniqueness: true,
                     format: { with: VALID_EMAIL_REGEX }
-  validates :website, allow_blank: true,
-                      format: { with: VALID_DOMAIN_REGEX }
+  # 利便性を考えると厳密なURLの正規表現は設定しない方がいいかも
+  # validates :website, allow_blank: true,
+  #                     format: { with: VALID_URL_REGEX }
   validates :bio, allow_blank: true,
                   length: { maximum: 500 }
-  validates :phone, allow_blank: true,
-                    numericality: { only_integer: true }
+  # 電話番号はstringの方が扱いやすいかも、ただ厳密に考えるには手間がかかる
+  # validates :phone, allow_blank: true,
+  #                   numericality: { only_integer: true }
   validates :gender, presence: true,
                      inclusion: { in: User.genders.keys }
   validate :validate_username

@@ -26,7 +26,8 @@ class AvatarUploader < CarrierWave::Uploader::Base
     %w(jpg jpeg png)
   end
 
+  # jpgで変換するのではなく、拡張子を変えずにファイル名だけ変えられないか？
   def filename
-    "#{Time.zone.now.strftime('%Y%m%d%H%M%S')}.jpg" if original_filename
+    "avatar_#{Time.zone.now.strftime('%Y%m%d%H%M%S')}.jpg" if original_filename
   end
 end
