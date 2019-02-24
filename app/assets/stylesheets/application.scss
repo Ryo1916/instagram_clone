@@ -3,3 +3,27 @@
  *= require_self
  */
 @import "bootstrap";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
+/* common */
+ul, li {
+  list-style: none;
+  float: left;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+/* footer */
+footer {
+  text-transform: uppercase;
+  color: #003569;
+  font-size: 14px;
+  text-align: center;
+
+  span {
+    margin-left: 10px;
+  }
+}
