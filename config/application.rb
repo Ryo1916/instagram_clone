@@ -32,5 +32,8 @@ module InstagramClone
 
     # Use secrets.yml for credentials
     config.read_encrypted_secrets = true
+
+    # Embed auth token to remote form
+    config.action_view.embed_authenticity_token_in_remote_forms = true
   end
 end
