@@ -13,8 +13,7 @@
 
   <div class="field">
     <%= form.label :image %>
-    <%= form.file_field :image, id: :post_image %>
-    <%= form.hidden_field :image_cache %>
+    <%= form.file_field :image, id: :post_image, accept: 'image/jpeg,image/jpg,image/png' %>
   </div>
 
   <div class="field">

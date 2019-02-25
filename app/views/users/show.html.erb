@@ -1,9 +1,89 @@
-<h1> <%= @user.username %> </h1>
-<p> <%= image_tag @user.avatar.thumb,
-                  class: 'rounded-circle',
-                  alt: 'users avatar' %> </p>
-<p> <%= @user.posts.count %> posts </p>
-<%= render @user.posts %>
+<% provide(:title, "#{@user.username}") %>
+<div class="container">
+  <div class="row my-5">
+    <div class="col-md-3 offset-md-2">
+      <%= image_tag @user.avatar, class: 'rounded-circle',
+                                  alt: 'users avatar' %>
+    </div>
+    <div class="col-md-5">
+      <div class="my-4">
+        <span class="mr-3"><%= @user.username %></span>
+        <% if @user == current_user %>
+          <%= link_to edit_user_path(@user) do %>
+            <div class="btn btn-outline-secondary">
+              Edit Profile
+            </div>
+          <% end %>
+        <% else %>
+          <!-- follow/unfollow button -->
+        <% end %>
+      </div>
+      <div class="mb-4">
+        <span class="mr-4"><%= @user.posts.count %> posts</span>
+        <span class="mr-4"><%#= @user.followers %> followers</span>
+        <span class="mr-4"><%#= @user.followings %> following</span>
+      </div>
+      <div>
+        <p><b><%= @user.name %></b></p>
+        <p><%= @user.bio %></p>
+        <p>
+          <a href="<%= @user.website %>" target=”_blank”>
+            <%= @user.website %>
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
 
-<%= link_to "logout", destroy_user_session_path, method: :delete %>
-<%= link_to "Edit profile", edit_user_registration_path %>
+  <hr>
+
+  <div class="row">
+    <% if @user.posts.blank? %>
+      <div class="col-md-12">
+        <p style="margin-left:30px;"><b>Getting Started</b></p>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="text-center">
+              <span style="font-size:40px;">
+                <i class="fab fa-facebook"></i>
+              </span>
+              <p>Find Friends from Facebook</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="text-center">
+              <span style="font-size:40px;">
+                <i class="fas fa-phone"></i>
+              </span>
+              <p>Register Your Phone</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="text-center">
+              <span style="font-size:40px;">
+                <i class="fas fa-camera"></i>
+              </span>
+              <p>Add Profile Photo</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <% @user.posts.each do |post| %>
+        <div class="col-md-4">
+          <%= render post %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
