@@ -7,10 +7,10 @@ class AvatarUploader < CarrierWave::Uploader::Base
     storage :file
   end
 
-  process resize_to_fit: [300, 300]
+  process resize_to_fill: [150, 150]
 
   version :thumb do
-    process resize_to_fit: [50, 50]
+    process resize_to_fill: [50, 50]
   end
 
   def default_url
