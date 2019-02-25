@@ -26,7 +26,7 @@
 #                            users GET      /users(.:format)                        users#index
 #                             user GET      /users/:id(.:format)                    users#show
 #                letter_opener_web          /letter_opener                          LetterOpenerWeb::Engine
-# 
+#
 # Routes for LetterOpenerWeb::Engine:
 # clear_letters DELETE /clear(.:format)                 letter_opener_web/letters#clear
 # delete_letter DELETE /:id(.:format)                   letter_opener_web/letters#destroy
@@ -35,7 +35,6 @@
 #               GET    /:id/attachments/:file(.:format) letter_opener_web/letters#attachment
 
 Rails.application.routes.draw do
-  resources :posts
   root 'mains#top'
   get 'mains/top'
 
@@ -45,7 +44,9 @@ Rails.application.routes.draw do
     registrations: 'users/registrations',
     sessions: 'users/sessions'
   }
-  resources :users, :only => [:show, :index]
+  resources :users, only: [:show, :index, :edit, :update]
+
+  resources :posts
 
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 end
