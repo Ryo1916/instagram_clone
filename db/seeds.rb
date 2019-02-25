@@ -53,3 +53,14 @@ users = User.order(:created_at).take(6)
     puts "#{post.user.username}'s post created!"
   end
 end
+
+puts "Start inserting seed relationships..."
+
+users = User.all
+user  = users.first
+following = users[2..10]
+followers = users[3..10]
+following.each { |followed| user.follow(followed) }
+followers.each { |follower| follower.follow(user) }
+
+puts "Finish inserting seed!"

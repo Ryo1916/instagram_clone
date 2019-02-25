@@ -15,13 +15,14 @@
             </div>
           <% end %>
         <% else %>
-          <!-- follow/unfollow button -->
+          <%= render 'follow_form' %>
         <% end %>
       </div>
       <div class="mb-4">
         <span class="mr-4"><%= @user.posts.count %> posts</span>
-        <span class="mr-4"><%#= @user.followers %> followers</span>
-        <span class="mr-4"><%#= @user.followings %> following</span>
+        <span class="stats mr-4">
+          <%= render 'shared/stats' %>
+        </span>
       </div>
       <div>
         <p><b><%= @user.name %></b></p>

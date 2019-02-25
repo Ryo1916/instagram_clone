@@ -16,6 +16,48 @@ a {
   text-decoration: none !important;
 }
 
+/* stats */
+.stats {
+  display: inline-flex;
+  a {
+    float: left;
+    padding: 0 10px;
+    color: gray;
+    &:first-child {
+      padding-left: 0;
+      border: 0;
+    }
+    &:hover {
+      text-decoration: none;
+      color: blue;
+    }
+  }
+}
+
+.user_avatars {
+  overflow: auto;
+  margin-top: 10px;
+  .gravatar {
+    margin: 1px 1px;
+  }
+  a {
+    padding: 0;
+  }
+}
+
+.users.follow {
+  padding: 0;
+}
+
+/* follow/unfollow */
+.new_relationship {
+  display: inline;
+}
+
+.edit_relationship {
+  display: inline;
+}
+
 /* footer */
 footer {
   text-transform: uppercase;
