@@ -1,4 +1,4 @@
-<%= form_with(model: post, local: true) do |form| %>
+<%= form_with(model: post, local: true, class: 'post') do |form| %>
   <% if post.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
@@ -11,19 +11,64 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :image %>
-    <%= form.file_field :image, id: :post_image, accept: 'image/jpeg,image/jpg,image/png' %>
+  <div class="form-group">
+    <img id="post_image_prev" src="#" style="display:none; width:300px; height:300px; object-fit:cover;">
+    <label for="post_image" class="choose_image" style="color:blue; cursor:pointer; margin:20px; padding:50px; border:dashed 2px #5b8bd0;">
+      Choose an image
+    </label>
+    <%= form.file_field :image, id: :post_image,
+                                class: 'form-control',
+                                style: 'display:none;',
+                                accept: 'image/jpeg,image/jpg,image/png' %>
+    <span id="display_post_image"></span>
   </div>
 
-  <div class="field">
-    <%= form.label :content %>
-    <%= form.text_area :content, id: :post_content %>
+  <div class="form-group">
+    <%= form.text_area :content, id: :post_content,
+                                 placeholder: "What's on your mind, #{current_user.username} ?",
+                                 class: 'form-control' %>
   </div>
 
   <%= form.hidden_field :user_id, value: current_user.id %>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Upload", class: 'btn btn-success' %>
   </div>
 <% end %>
+
+<script>
+  $(document).on('turbolinks:load', function(){
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          $('#post_image_prev').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    $("#post_image").change(function(){
+      $('#post_image_prev').show();
+      $('.choose_image').remove();
+      readURL(this);
+    });
+  });
+
+  $(document).ready(function(){
+    $('#post_image').val("");
+    $('#post_image').change(function(){
+      var array = $('#post_image').val();
+      var image_name = array.split("\\");
+      $('#display_post_image').html(image_name[2]);
+    });
+
+    $('.post').bind('change', function(){
+      var size_in_megabytes = this.files[0].size/1024/1024;
+      if (size_in_megabytes > 5) {
+        alert('Maximum file size is 5MB. Please choose a smaller file.');
+      }
+    });
+  });
+</script>

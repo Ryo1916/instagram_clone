@@ -1,21 +1,29 @@
 <%= provide(:title, 'Post') %>
-
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Image:</strong>
-  <%= image_tag @post.image.thumb %>
-</p>
-
-<p>
-  <strong>Content:</strong>
-  <%= @post.content %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @post.user.username %>
-</p>
-
-<%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Back', posts_path %>
+<div class="container">
+  <div class="row my-4">
+    <div class="col-md-6 offset-md-3">
+      <div class="card">
+        <div class="card-body">
+          <p><%= image_tag @post.image %></p>
+          <p>
+            <strong>Content:</strong>
+            <%= @post.content %>
+          </p>
+          <p>
+            <strong>User:</strong>
+            <%= @post.user.username %>
+          </p>
+          <p>
+            <strong>Posted:</strong>
+            <%= @post.updated_at.strftime('%Y %-b %-d %H:%M') %>
+          </p>
+          <%# いいね数、コメント数を表示 %>
+          <%= link_to 'Back', posts_path %>
+          <%= link_to 'Edit', edit_post_path(@post) %>
+          <%= link_to 'Delete', post_path(@post), method: :delete, data: { confirm: "Are you sure?" } %>
+        </div>
+      </div>
+      <!-- コメント入力欄、コメント一覧を表示 -->
+    </div>
+  </div>
+</div>

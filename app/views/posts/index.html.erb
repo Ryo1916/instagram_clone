@@ -1,8 +1,28 @@
 <%= provide(:title, 'Posts') %>
-
 <div class="container">
-  <div class="row">
-    <%= link_to 'New Post', new_post_path, class: "btn btn-success" %>
+  <div class="row my-4">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <section class="user_info">
+            <%= image_tag current_user.avatar, class: 'rounded-circle' %>
+            <h3><%= current_user.username %></h3>
+            <p><%= link_to "view profile", user_path(current_user) %></p>
+            <span>Posts: <%= current_user.posts.count %></span>
+          </section>
+          <section class="stats">
+            <%= render 'shared/stats' %>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <%= render 'form', post: @post %>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="row">
     <% @posts.each do |post| %>

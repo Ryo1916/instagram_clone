@@ -1,9 +1,9 @@
-<nav class="navbar navbar-light sticky-top" style="background-color:#fff;">
+<nav class="navbar navbar-light sticky-top justify-content-around" style="background-color:#fff;">
   <% if user_signed_in? %>
     <a class="navbar-brand" href="/posts">
-      <span><i class="fab fa-instagram"></i></span>
-      <span>|</span>
-      <span><%= image_tag("instagram-new-logo.png", style: "height: 60px") %></span>
+      <span><i class="fab fa-instagram" style="padding-right:10px; border-right:1px solid gray"></i></span>
+      <!-- <span>|</span> -->
+      <span><%= image_tag("instagram-new-logo.png", style: "height:60px;") %></span>
     </a>
   <% else %>
     <a class="navbar-brand" href="/">
@@ -36,7 +36,7 @@
         <% end %>
 
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" style="position: absolute;right: 0;left: auto;">
-          <%= link_to "Explore", "#", class: "dropdown-item" %>
+          <%= link_to "Explore", users_path, class: "dropdown-item" %>
           <%= link_to "Notifications", "#", class: "dropdown-item" %>
           <%= link_to "Your Account", user_path(current_user), class: "dropdown-item" %>
           <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
