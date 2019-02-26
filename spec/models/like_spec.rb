@@ -12,5 +12,32 @@
 require 'rails_helper'
 
 RSpec.describe Like, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  before do
+    @user = User.create(
+      name: "Aaron Sumner",
+      username: "Aaron",
+      email: "aaron@test.abc",
+      password: "password"
+    )
+    @post = Post.create(
+      image: File.open(File.join(Rails.root, "spec/fixtures/download.jpeg")),
+      content: "This is the cat, isn't it?",
+      user_id: @user.id)
+
+    @like = Like.new(user_id: @user.id,
+                     post_id: @post.id)
+  end
+
+  it { should validate_presence_of(:user_id) }
+  it { should validate_presence_of(:post_id) }
+
+  it "is invalid withoud user_id" do
+    @like.user_id = nil
+    expect(@like).not_to be_valid
+  end
+
+  it "is invalid without post_id" do
+    @like.post_id = nil
+    expect(@like).not_to be_valid
+  end
 end
