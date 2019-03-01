@@ -27,4 +27,5 @@
   <div class="row">
     <%= render @posts %>
   </div>
+  <%= will_paginate @posts, :renderer => WillPaginate::ActionView::Bootstrap4LinkRenderer %>
 </div>

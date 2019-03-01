@@ -3,12 +3,10 @@ class UsersController < ApplicationController
   before_action :set_user, except: [:index]
 
   def show
-    @posts = @user.posts
-    @liked = Like.where(user_id: current_user.id)
   end
 
   def index
-    @users = User.all
+    @users = User.paginate(page: params[:page])
   end
 
   def edit

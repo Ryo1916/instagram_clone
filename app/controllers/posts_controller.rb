@@ -4,7 +4,7 @@ class PostsController < ApplicationController
 
   def index
     @post = Post.new
-    @posts = current_user.feed
+    @posts = current_user.feed.paginate(page: params[:page])
   end
 
   def show
