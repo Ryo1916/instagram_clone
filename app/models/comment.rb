@@ -13,4 +13,8 @@
 class Comment < ApplicationRecord
   belongs_to :user
   belongs_to :post
+  validates_presence_of :user_id
+  validates_presence_of :post_id
+  validates :text, presence: true,
+                   length: { maximum: 255 }
 end
