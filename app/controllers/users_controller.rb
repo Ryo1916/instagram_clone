@@ -4,6 +4,7 @@ class UsersController < ApplicationController
 
   def show
     @posts = @user.posts
+    @liked = Like.where(user_id: current_user.id)
   end
 
   def index
