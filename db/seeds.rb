@@ -1,18 +1,15 @@
-require "open-uri"
-require 'openssl'
-
 puts 'Start inserting seed users...'
-User.create!(name: "Example User",
-             username: "exampleuser",
-             email: "example@railstutorial.org",
-             website: "https://railstutorial.jp",
-             bio: Faker::Lorem.sentence(6),
-             phone: 9910375368,
-             gender: 1,
-             avatar: File.open("#{Rails.root}/spec/fixtures/download.jpeg"),
-             password:              "password",
-             password_confirmation: "password")
-
+user = User.create!(name: "Example User",
+                    username: "exampleuser",
+                    email: "example@railstutorial.org",
+                    website: "https://railstutorial.jp",
+                    bio: Faker::Lorem.sentence(6),
+                    phone: 9910375368,
+                    gender: 1,
+                    avatar: File.open("#{Rails.root}/spec/fixtures/download.jpeg"),
+                    password:              "password",
+                    password_confirmation: "password")
+puts "#{user.username} created!"
 10.times do |n|
  user = User.create!({
     name: Faker::Name.name,
@@ -56,10 +53,19 @@ users = User.all
 liking_users = users[2..10]
 like_posts = Post.all
 like_posts.each do |like_post|
-  print "post:#{like_post.id}, "
   liking_users.each do |liking_user|
-    puts "user:#{liking_user.id}"
     like_post.like(liking_user)
+  end
+end
+
+puts "Start inserting seed comments..."
+users = User.all
+commenting_users = users[2..10]
+posts = Post.all
+commenting_users.each do |commenting_user|
+  posts.each do |post|
+    post.comment(Faker::Lorem.sentence(6),
+                 commenting_user)
   end
 end
 
