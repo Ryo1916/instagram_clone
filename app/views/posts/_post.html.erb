@@ -1,9 +1,12 @@
-<div class="card mb-4" id="post-<%= post.id %>" data-toggle="modal" data-target="#exampleModalCenter-<%= post.id %>">
-  <%= image_tag(post.image.thumb, class: "card-img-top", alt: "#{post.user.username}\'s post") %>
+<div class="col-md-4">
+  <!-- FIXME: 自分の投稿をいいねした場合、自分の投稿とidが重複するためmodalが動作しない -->
+  <div class="card mb-4" id="post-<%= post.id %>" data-toggle="modal" data-target="#ModalCenter-<%= post.id %>">
+    <%= image_tag(post.image.thumb, class: "card-img-top", alt: "#{post.user.username}\'s post") %>
+  </div>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModalCenter-<%= post.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="ModalCenter-<%= post.id %>" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -26,6 +29,7 @@
               <p class="mt-3">
                 <%= post.content %>
               </p>
+              <%= render 'likes/like_form', post: post %>
               <% if post.user == current_user %>
                 <%= link_to 'Show', post %>
                 <%= link_to 'Edit', edit_post_path(post) %>

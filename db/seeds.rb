@@ -1,17 +1,7 @@
 require "open-uri"
 require 'openssl'
 
-# https://github.com/stympy/faker/issues/763
-OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
-
-def image_fetcher
-  open(Faker::Avatar.image(slug = nil, size = '300x300', format = 'jpg'))
-  rescue
-  open("https://robohash.org/sitsequiquia.png?size=300x300&set=set1")
-end
-
 puts 'Start inserting seed users...'
-
 User.create!(name: "Example User",
              username: "exampleuser",
              email: "example@railstutorial.org",
@@ -41,7 +31,6 @@ User.create!(name: "Example User",
 end
 
 puts "Start inserting seed posts..."
-
 users = User.order(:created_at).take(6)
 10.times do |n|
   users.each do |user|
@@ -55,12 +44,23 @@ users = User.order(:created_at).take(6)
 end
 
 puts "Start inserting seed relationships..."
-
 users = User.all
 user  = users.first
 following = users[2..10]
 followers = users[3..10]
 following.each { |followed| user.follow(followed) }
 followers.each { |follower| follower.follow(user) }
+
+puts "Start inserting seed likes..."
+users = User.all
+liking_users = users[2..10]
+like_posts = Post.all
+like_posts.each do |like_post|
+  print "post:#{like_post.id}, "
+  liking_users.each do |liking_user|
+    puts "user:#{liking_user.id}"
+    like_post.like(liking_user)
+  end
+end
 
 puts "Finish inserting seed!"

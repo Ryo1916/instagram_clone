@@ -1,0 +1,10 @@
+<% like = find_liked_post(current_user, post) %>
+<%= link_to post_like_path(id: like.id, post_id: like.post_id),
+            method: :delete,
+            class: "unlike-button",
+            remote: true do %>
+  <i class="fas fa-heart like-btn-unlike unlike"></i>
+<% end %>
+<span id="like-count-<%= post.id %>">
+  <%#= post.likes_count %>
+</span>

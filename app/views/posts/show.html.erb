@@ -17,6 +17,7 @@
             <strong>Posted:</strong>
             <%= @post.updated_at.strftime('%Y %-b %-d %H:%M') %>
           </p>
+          <%= render 'likes/like_form', post: @post %>
           <%# いいね数、コメント数を表示 %>
           <%= link_to 'Back', posts_path %>
           <%= link_to 'Edit', edit_post_path(@post) %>

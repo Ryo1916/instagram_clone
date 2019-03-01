@@ -26,11 +26,11 @@ class Post < ApplicationRecord
   validates :user_id, presence: true
 
   def like(user)
-    likes.create(user_id: user_id)
+    likes.create(user_id: user.id)
   end
 
   def unlike(user)
-    likes.find_by(user_id: user_id).destroy
+    likes.find_by(user_id: user.id).destroy
   end
 
   def like?(user)

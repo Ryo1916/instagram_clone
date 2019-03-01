@@ -1,0 +1,7 @@
+<div id="like_form_<%= post.id %>" style="display:inline;">
+  <% if post.like?(current_user) %>
+    <%= render partial: 'likes/unlike', locals: { post: post } %>
+  <% else %>
+    <%= render partial: 'likes/like', locals: { post: post } %>
+  <% end %>
+</div>

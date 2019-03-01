@@ -1,0 +1,9 @@
+<%= link_to post_likes_path(post_id: post.id),
+            method: :post,
+            class: "like-button",
+            remote: true do %>
+  <i class="far fa-heart like-btn like"></i>
+<% end %>
+<span id="like-count-<%= post.id %>">
+  <%#= post.likes_count %>
+</span>
