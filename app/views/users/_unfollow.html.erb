@@ -1,5 +1,7 @@
-<%= form_for(current_user.active_relationships.find_by(followed_id: @user.id),
-             html: { method: :delete },
-             remote: true) do |f| %>
-  <%= f.submit "Unfollow", class: "btn btn-outline-info" %>
+<%= link_to user_relationship_path(user_id: current_user.id, id: followed_id(current_user, user)),
+            method: :delete,
+            remote: true do %>
+  <div class="btn btn-outline-info">
+    Unfollow
+  </div>
 <% end %>

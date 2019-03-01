@@ -9,15 +9,15 @@
         <span>Posts: <%= @user.posts.count %></span>
       </section>
       <section class="stats">
-        <%= render 'shared/stats' %>
+        <!-- TODO: Follow/Unfollowしたらfollowingの数を更新する -->
+        <%#= render 'shared/stats' %>
       </section>
     </aside>
     <div class="col-md-8">
       <h4><%= @title %></h4>
       <div class="row">
         <% if @users.any? %>
-          <%= render 'users/user' %>
-          <%#= will_paginate %>
+          <%= render @users %>
         <% end %>
       </div>
     </div>
