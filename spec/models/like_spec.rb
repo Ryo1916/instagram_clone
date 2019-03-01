@@ -22,8 +22,8 @@ RSpec.describe Like, type: :model do
     @post = Post.create(
       image: File.open(File.join(Rails.root, "spec/fixtures/download.jpeg")),
       content: "This is the cat, isn't it?",
-      user_id: @user.id)
-
+      user_id: @user.id
+    )
     @like = Like.new(user_id: @user.id,
                      post_id: @post.id)
   end
@@ -31,7 +31,7 @@ RSpec.describe Like, type: :model do
   it { should validate_presence_of(:user_id) }
   it { should validate_presence_of(:post_id) }
 
-  it "is invalid withoud user_id" do
+  it "is invalid without user_id" do
     @like.user_id = nil
     expect(@like).not_to be_valid
   end

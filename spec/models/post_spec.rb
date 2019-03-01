@@ -23,14 +23,7 @@ RSpec.describe Post, type: :model do
         email: "aaron@test.abc",
         password: "dottle-nouveau-pavilion-tights-furze",
       )
-
       @new_post = FactoryBot.build_stubbed(:post)
-      # image_path = File.join(Rails.root, "spec/fixtures/sample.jpeg")
-      # @new_post = @user.posts.build(
-      #   image: File.open(image_path),
-      #   content: "lorem ipsum",
-      #   user_id: @user.id
-      # )
     end
 
     it { should validate_presence_of(:image) }
