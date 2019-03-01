@@ -25,10 +25,6 @@
     </div>
   </div>
   <div class="row">
-    <% @posts.each do |post| %>
-      <div class="col-md-4">
-        <%= render post %>
-      </div>
-    <% end %>
+    <%= render @posts %>
   </div>
 </div>
