@@ -3,10 +3,9 @@
   <div class="row my-4">
     <div class="col-md-6 offset-md-3">
       <div class="card">
+        <%= image_tag @post.image, class: 'card-img-top', alt: "#{@post.user.username}\s posted image" %>
         <div class="card-body">
-          <p><%= image_tag @post.image %></p>
           <p>
-            <strong>Content:</strong>
             <%= @post.content %>
           </p>
           <p>
@@ -24,7 +23,12 @@
           <%= link_to 'Delete', post_path(@post), method: :delete, data: { confirm: "Are you sure?" } %>
         </div>
       </div>
-      <!-- コメント入力欄、コメント一覧を表示 -->
+      <div class="card-footer scroll">
+        <div class="comment-form mb-4">
+          <%= render partial: 'comments/form', locals: { comment: @comment } %>
+        </div>
+        <%= render @comments %>
+      </div>
     </div>
   </div>
 </div>

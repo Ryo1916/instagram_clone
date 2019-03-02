@@ -8,6 +8,8 @@ class PostsController < ApplicationController
   end
 
   def show
+    @comment = @post.comments.build(user_id: current_user.id)
+    @comments = @post.comments.all
   end
 
   def new

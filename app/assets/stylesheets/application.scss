@@ -58,6 +58,12 @@ a {
   display: inline;
 }
 
+/* comments */
+.scroll {
+  height: 300px;
+  overflow-y: scroll;
+}
+
 /* footer */
 footer {
   text-transform: uppercase;

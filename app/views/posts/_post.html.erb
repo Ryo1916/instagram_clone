@@ -47,7 +47,9 @@
       </div>
       <div class="modal-footer">
         <!-- コメント表示 -->
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <div class="container scroll">
+          <%= render post.comments %>
+        </div>
       </div>
     </div>
   </div>
