@@ -64,8 +64,11 @@ commenting_users = users[2..10]
 posts = Post.all
 commenting_users.each do |commenting_user|
   posts.each do |post|
-    post.comment(Faker::Lorem.sentence(6),
-                 commenting_user)
+    post.comments.create!(
+      text: Faker::Lorem.sentence(6),
+      user_id: commenting_user.id
+    )
+    puts "#{commenting_user}\'s comment created!"
   end
 end
 
