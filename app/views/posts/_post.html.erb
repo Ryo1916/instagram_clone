@@ -29,7 +29,12 @@
               <p class="mt-3">
                 <%= post.content %>
               </p>
-              <%= render 'likes/like_form', post: post %>
+              <p>
+                <%= render 'likes/like_form', post: post %>
+                <%= link_to post do %>
+                  <i class="far fa-comment ml-2"></i>
+                <% end %>
+              </p>
               <% if post.user == current_user %>
                 <%= link_to 'Show', post %>
                 <%= link_to 'Edit', edit_post_path(post) %>
@@ -43,14 +48,17 @@
         </button>
       </div>
       <div class="modal-body">
-        <%= image_tag(post.image, class: "card-img-top", alt: "#{post.user.username}\'s post") %>
+        <%= link_to post do %>
+          <%= image_tag(post.image, class: "card-img-top", alt: "#{post.user.username}\'s post") %>
+        <% end %>
       </div>
-      <div class="modal-footer">
-        <!-- コメント表示 -->
-        <div class="container scroll">
-          <%= render post.comments %>
+      <% if post.comments.any? %>
+        <div class="modal-footer">
+          <div class="container scroll">
+            <%= render post.comments %>
+          </div>
         </div>
-      </div>
+      <% end %>
     </div>
   </div>
 </div>
