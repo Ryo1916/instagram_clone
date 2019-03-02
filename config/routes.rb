@@ -51,6 +51,7 @@ Rails.application.routes.draw do
   end
   resources :posts do
     resources :likes, only: [:create, :destroy]
+    resources :comments, only: [:create, :destroy]
   end
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 end

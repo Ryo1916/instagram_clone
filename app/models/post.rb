@@ -38,14 +38,6 @@ class Post < ApplicationRecord
     liking_users.include?(user)
   end
 
-  def comment(text, user)
-    comments.create(text: text, user_id: user.id)
-  end
-
-  def uncomment(user)
-    comments.find_by(user_id: user.id).destroy
-  end
-
   private
 
     def image_size
