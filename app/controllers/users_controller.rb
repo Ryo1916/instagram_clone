@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  include Users
+
   before_action :authenticate_user!
   before_action :set_user, except: [:index]
 
@@ -6,7 +8,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.paginate(page: params[:page])
+    @users = get_users(params[:search]).paginate(page: params[:page])
   end
 
   def edit

@@ -1,10 +1,12 @@
 class PostsController < ApplicationController
+  include Posts
+
   before_action :authenticate_user!
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   def index
     @post = Post.new
-    @posts = current_user.feed.paginate(page: params[:page])
+    @posts = get_posts(params[:search]).paginate(page: params[:page])
   end
 
   def show
