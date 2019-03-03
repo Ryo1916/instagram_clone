@@ -14,7 +14,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   end
 
   def default_url
-    'default.jpg'
+    [version_name, "default.jpg"].compact.join('_')
   end
 
   def store_dir
