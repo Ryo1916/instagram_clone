@@ -1,0 +1,33 @@
+<footer class="py-5">
+  <div class="container">
+    <% if user_signed_in? %>
+      <div class="row">
+        <div class="col-md-12 user-links pb-2">
+          <span><%= link_to("home", posts_path) %></span>
+          <span><%= link_to("new post", new_post_path) %></span>
+          <span><%= link_to("explore", "#") %></span>
+          <span><%= link_to("notifications", "#") %></span>
+          <span><%= link_to("profile", edit_user_path(current_user)) %></span>
+        </div>
+      </div>
+    <% end %>
+    <div class="row">
+      <div class="col-md-12 links pb-2">
+        <span><%= link_to("about us", "#") %></span>
+        <span><%= link_to("support", "#") %></span>
+        <span><%= link_to("press", "#") %></span>
+        <span><%= link_to("api", "#") %></span>
+        <span><%= link_to("jobs", "#") %></span>
+        <span><%= link_to("privacy", "#") %></span>
+        <span><%= link_to("terms", "#") %></span>
+        <span><%= link_to("directory", "#") %></span>
+        <span><%= link_to("profiles", "#") %></span>
+        <span><%= link_to("hashtags", "#") %></span>
+        <span><%= link_to("languages", "#") %></span>
+      </div>
+      <div class="col-md-12 copyright">
+        <span>&copy; <%= Time.new.year %> instagram</span>
+      </div>
+    </div>
+  </div>
+</footer>

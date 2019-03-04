@@ -1,0 +1,77 @@
+/*
+ *= require_tree .
+ *= require_self
+ */
+@import "bootstrap";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
+/* common */
+ul, li {
+  list-style: none;
+  float: left;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+/* stats */
+.stats {
+  display: inline-flex;
+  a {
+    float: left;
+    padding: 0 10px;
+    color: gray;
+    &:first-child {
+      padding-left: 0;
+      border: 0;
+    }
+    &:hover {
+      text-decoration: none;
+      color: blue;
+    }
+  }
+}
+
+.user_avatars {
+  overflow: auto;
+  margin-top: 10px;
+  .gravatar {
+    margin: 1px 1px;
+  }
+  a {
+    padding: 0;
+  }
+}
+
+.users.follow {
+  padding: 0;
+}
+
+/* follow/unfollow */
+.new_relationship {
+  display: inline;
+}
+
+.edit_relationship {
+  display: inline;
+}
+
+/* comments */
+.scroll {
+  height: 300px;
+  overflow-y: scroll;
+}
+
+/* footer */
+footer {
+  text-transform: uppercase;
+  color: #003569;
+  font-size: 14px;
+  text-align: center;
+
+  span {
+    margin-left: 10px;
+  }
+}

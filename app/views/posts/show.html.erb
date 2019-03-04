@@ -1,0 +1,35 @@
+<%= provide(:title, 'Post') %>
+<div class="container">
+  <div class="row my-4">
+    <div class="col-md-6 offset-md-3">
+      <div class="card">
+        <%= image_tag @post.image, class: 'card-img-top', alt: "#{@post.user.username}\s posted image" %>
+        <div class="card-body">
+          <p>
+            <%= @post.content %>
+          </p>
+          <p>
+            <strong>User:</strong>
+            <%= @post.user.username %>
+          </p>
+          <p>
+            <strong>Posted:</strong>
+            <%= @post.updated_at.strftime('%Y %-b %-d %H:%M') %>
+          </p>
+          <p>
+            <%= render 'likes/like_form', post: @post %>
+          </p>
+          <%= link_to 'Back', request.referer %>
+          <%= link_to 'Edit', edit_post_path(@post) %>
+          <%= link_to 'Delete', post_path(@post), method: :delete, data: { confirm: "Are you sure?" } %>
+        </div>
+      </div>
+      <div class="card-footer scroll">
+        <div class="comment-form mb-4">
+          <%= render partial: 'comments/form', locals: { comment: @comment } %>
+        </div>
+        <%= render @comments %>
+      </div>
+    </div>
+  </div>
+</div>

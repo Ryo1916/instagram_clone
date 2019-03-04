@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>InstagramClone</title>
-    <%= csrf_meta_tags %>
-
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <title><%= page_title(yield(:title)) %></title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <%= favicon_link_tag('favicon.ico') %>
+    <%= render 'layouts/rails_default' %>
+    <%= render 'layouts/shim' %>
   </head>
 
-  <body>
+  <body class="bg-light">
+    <%= render 'layouts/header' if user_signed_in? %>
+    <% unless notice.blank? %>
+      <p class="notice alert alert-success" role="alert" style="text-align:center; margin-bottom:-20px;"><%= notice %></p>
+    <% end %>
+    <% unless alert.blank? %>
+      <p class="alert alert-danger" role="alert" style="text-align:center; margin-bottom:-20px;"><%= alert %></p>
+    <% end %>
     <%= yield %>
+    <%= render 'layouts/footer' %>
   </body>
 </html>

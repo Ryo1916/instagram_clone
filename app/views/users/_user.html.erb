@@ -1,0 +1,13 @@
+<div class="col-md-3 my-2">
+  <div class="card">
+    <div class="card-body text-center">
+      <p>
+        <%= link_to user_path(user) do %>
+        <%= image_tag(user.avatar.thumb, class: "rounded-circle") %>
+        <% end %>
+      </p>
+      <p><%= user.username %></p>
+      <%= render 'follow_form', user: user %>
+    </div>
+  </div>
+</div>

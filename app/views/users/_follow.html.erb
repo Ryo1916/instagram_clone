@@ -1,0 +1,7 @@
+<%= link_to user_relationships_path(user_id: user.id),
+            method: :post,
+            remote: true do %>
+  <div class="btn btn-primary">
+    Follow
+  </div>
+<% end %>
